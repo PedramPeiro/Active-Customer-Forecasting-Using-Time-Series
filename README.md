@@ -1,4 +1,4 @@
-![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/8eddc26d-b8d5-43e1-bd0d-a35ed68a3398)# Active Customer Forecasting Using Time Series
+# Active Customer Forecasting Using Time Series
 The primary goal of this project was to predict future active customers using the Didar CRM software. The analysis harnessed various features to achieve this objective, including:
 
 | Date       | ActiveCustomer | Churned | DealsAdded | Leads | NewPaid | ClosedDeals |
@@ -81,6 +81,7 @@ history = model_ConvLSTM.fit(x_train_univariate , validation_data = x_val_univar
 
 - As previously mentioned, the weighted average metrics of Mean Absolute Error (MAE) and Mean Squared Error (MSE) on both validation and test sets are showcased. Through this analysis, the optimal number of training epochs is identified as 310.
 ![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/ee1c82f7-f340-43ac-897f-06dac94db7cb)
+![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/8eddc26d-b8d5-43e1-bd0d-a35ed68a3398)
 
 - Below, the performance of the model in making predictions is illustrated:
 ![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/481f758a-8dc8-4cb4-9303-cfa25f723a6d)
@@ -88,3 +89,24 @@ history = model_ConvLSTM.fit(x_train_univariate , validation_data = x_val_univar
 - An essential point, to be further elaborated in the conclusion and takeaway section, is that this model is designed for single-step prediction and is not inherently a multistep model. *However*, in practice, it is employed for multi-step prediction by assuming that the predicted value for the next step might serve as an approximation for the actual value of the future step.
 - The overall forecasting trend is illustrated below:
 ![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/e4c11dce-a82b-4b86-aac2-2180057635ed)
+
+## Univariate TS Models - In Production
+To circumvent the need to repeatedly implement the model from scratch and undergo the learning phase, we save the model as a .h5 file. Subsequently, we can load and utilize the model for future predictions. This rationale underlies the existence of the notebook named [2. Univariate TS Models - In Production.ipynb](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/blob/main/2.%20Univariate%20TS%20Models%20-%20In%20Production.ipynb). Additionally, it's crucial to note that the same scaler object should be used, rather than a new one, as it directly impacts the weights of the model.
+
+## Read More
+Thus far, we've developed a univariate multi-step (to some extent) single-output time series model. If you're eager to delve deeper into this domain, I recommend exploring the following materials that greatly contributed to my understanding:
+- [Seuqence Models](https://www.coursera.org/learn/nlp-sequence-models/home/info) to get familiar with time series algirithms such as RNNs, LSTMs, GRUs, etc.
+- [ Sequences, Time Series and Prediction](https://www.coursera.org/learn/tensorflow-sequences-time-series-and-prediction/home/info) to get familiar with TS forecasting with hands-on projects. It's more applied than theories.
+- [tsai](https://github.com/timeseriesAI/tsai) State-of-the-art Deep Learning library for Time Series and Sequences.
+- [Keras Timeseries Multi-Step Multi-Output](https://www.kaggle.com/code/nicapotato/keras-timeseries-multi-step-multi-output)
+- [time_series](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/structured_data/time_series.ipynb#scrollTo=b-2ShX25yNWf&uniqifier=1) This notebook provides a comprehensive breakdown of all time series models and their handling. It offers invaluable insights; don't miss this opportunity for a thorough understanding.
+- [Multivariate Time series Forecasting](https://www.kaggle.com/code/pateljay731/multivariate-time-series-forecasting/notebook)
+- [Deep Learning Time Series Forecasting](https://github.com/Alro10/deep-learning-time-series): This repository contains the latest famous papers of TS algorithms and their code.
+
+## Conclusion & Key Takeaways
+Are the sophisticated algorithms we implemented truly necessary for forecasting future customer numbers? Does the available data suffice, and is our chosen methodology suitable? These are critical questions that will be addressed shortly.
+
+1. **What was the objective of the project in the first place?** The primary objective of the project is to predict the number of active customers. However, the choice of the prediction period, whether monthly or daily, is influenced by practical considerations. Ideally, as managers of a company, a monthly overview is preferred for calculating income and planning expansions. Regrettably, due to data limitations, we were compelled to utilize daily records.
+2. **Why did you consider 50 as the window size while your desired number of time-steps is 90?** While theoretically, and even in practice, it's advisable to consider a window of more than 90 time steps to forecast the future 90 time steps, this would necessitate having at least 180 records in validation and test sets. Unfortunately, due to data constraints, we opted to deviate from this obligation and were content with values less than 90 (the window size).
+3. **Why didn't you implement the multi-step models instead of a single-step model and use it as a multi-step one?** Because of the lack of data AGAIN :))
+4. **What do you suggest to deal with this specfic project at last?** I highly recommend considering linear regression. Examining the trend, aside from the deep spike around Feb-March, the upward trajectory is remarkably smooth. Utilizing linear regression not only captures this trend effectively but also enhances interpretability.
