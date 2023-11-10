@@ -22,6 +22,7 @@ The primary goal of this project was to predict future active customers using th
 - **ClosedDeals**: The number of deals closed on a specific day, including both successful and unsuccessful closures by our users.
 
 
+
 ## 1. Preprocessing
 You can find this section in the [1. Preprocessing.ipynb](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/blob/main/1.%20Preprocessing.ipynb) notebook. In machine learning, a crucial step is preprocessing, guided by the principle of avoiding **GIGO**: garbage in, garbage out. To mitigate this, we undertake feature engineering and cleaning. Upon visualizing the features, potential outliers become apparent in the dataset. Addressing these anomalies is crucial for ensuring the success of our multivariate time series forecasting.
 
@@ -54,6 +55,8 @@ Before delving into the specifics, it's beneficial to familiarize yourself with 
 3. To establish a baseline for comparison, the baseline error was calculated using the *Last Period Demand Forecast Method* and was found to be 13. It's important to note that this method is most effective for forecasting the demand for a single timestep ahead, not for multiple timesteps.
 4. **IMPORTANT**: Ensure that you scale your dataset, either through normalization or standardization. In this context, normalization has been chosen.
 
+
+
 ### Some Important Functions
 - ```windowed_dataset```: Transforms the input data into a windowed dataset suitable for time series tasks.
 - ```model_forecast```: This function is employed for predicting the next future value.
@@ -61,6 +64,8 @@ Before delving into the specifics, it's beneficial to familiarize yourself with 
 - ```metric_calculator_val_test```: Calculates metrics such as Mean Squared Error (MSE) and Mean Absolute Error (MAE) for validation and test sets.
 - ```plot_mae_mse_based_on_epochs```:  Plots the MSE and MAE throughout the training epochs for both test and validation sets, along with their weighted average in a single plot. This aids in selecting the optimal number of epochs for training.
 - ```plot_time_series```: Plots the time series trend.
+
+
 
 ### Conv1D-LSTM
 
@@ -90,8 +95,12 @@ history = model_ConvLSTM.fit(x_train_univariate , validation_data = x_val_univar
 - The overall forecasting trend is illustrated below:
 ![image](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/assets/102898063/e4c11dce-a82b-4b86-aac2-2180057635ed)
 
+
+
 ## Univariate TS Models - In Production
 To circumvent the need to repeatedly implement the model from scratch and undergo the learning phase, we save the model as a .h5 file. Subsequently, we can load and utilize the model for future predictions. This rationale underlies the existence of the notebook named [2. Univariate TS Models - In Production.ipynb](https://github.com/PedramPeiro/Active-Customer-Forecasting-Using-Time-Series/blob/main/2.%20Univariate%20TS%20Models%20-%20In%20Production.ipynb). Additionally, it's crucial to note that the same scaler object should be used, rather than a new one, as it directly impacts the weights of the model.
+
+
 
 ## Read More
 Thus far, we've developed a univariate multi-step (to some extent) single-output time series model. If you're eager to delve deeper into this domain, I recommend exploring the following materials that greatly contributed to my understanding:
@@ -102,6 +111,8 @@ Thus far, we've developed a univariate multi-step (to some extent) single-output
 - [time_series](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/structured_data/time_series.ipynb#scrollTo=b-2ShX25yNWf&uniqifier=1) This notebook provides a comprehensive breakdown of all time series models and their handling. It offers invaluable insights; don't miss this opportunity for a thorough understanding.
 - [Multivariate Time series Forecasting](https://www.kaggle.com/code/pateljay731/multivariate-time-series-forecasting/notebook)
 - [Deep Learning Time Series Forecasting](https://github.com/Alro10/deep-learning-time-series): This repository contains the latest famous papers of TS algorithms and their code.
+
+
 
 ## Conclusion & Key Takeaways
 Are the sophisticated algorithms we implemented truly necessary for forecasting future customer numbers? Does the available data suffice, and is our chosen methodology suitable? These are critical questions that will be addressed shortly.
